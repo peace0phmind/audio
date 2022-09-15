@@ -110,6 +110,7 @@ def _parse_sources():
     archive_dir.mkdir(exist_ok=True)
     for lib in libs:
         cmake_file = third_party_dir / lib / "CMakeLists.txt"
+        print(f"_parse_sources {cmake_file}")
         for url in _parse_url(cmake_file):
             path = archive_dir / os.path.basename(url)
             yield path, url
@@ -117,6 +118,7 @@ def _parse_sources():
 
 def _fetch_archives(src):
     for dest, url in src:
+        print(f" --- _fetch_archives {url}")
         if not dest.exists():
             print(f" --- Fetching {os.path.basename(dest)}")
             torch.hub.download_url_to_file(url, dest, progress=False)
